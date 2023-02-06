@@ -6,6 +6,7 @@ const useSubmit = () => {
   } else {
     chatLog = [...oldChatLog];
   }
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const input = e.target.input.value;
@@ -25,7 +26,6 @@ const useSubmit = () => {
       .then((data) => {
         chatLog.push({ user: "Rakib", text: data.bot });
         localStorage.setItem("chatLog", JSON.stringify(chatLog));
-        window.location.reload(true);
       })
       .catch((error) => {
         console.error("Error:", error);

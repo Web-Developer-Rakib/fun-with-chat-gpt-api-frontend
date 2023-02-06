@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Rakib from "../img/rakib.jpeg";
+import Me from "../img/user.png";
 
 const ChatBubbles = () => {
-  // const { isLoad } = useSubmit();
-  const chatLog = JSON.parse(localStorage.getItem("chatLog"));
-  // const [chatLog, setChatLog] = useState([]);
-  // useEffect(() => {
-  //   setChatLog(chatLogs);
-  // }, []);
+  const [chatLog, setChatLog] = useState([]);
+
+  useEffect(() => {
+    setChatLog(JSON.parse(localStorage.getItem("chatLog")));
+  }, []);
   return (
     <div>
       {chatLog.map((message) => (
@@ -17,15 +18,14 @@ const ChatBubbles = () => {
         >
           <div className="chat-image avatar">
             <div className="w-10 rounded-full">
-              <img src="https://picsum.photos/seed/picsum/200/300" />
+              <img
+                src={message.user === "Me" ? Me : Rakib}
+                alt={message.user === "Me" ? "user" : "rakib"}
+              />
             </div>
           </div>
-          <div className="chat-header">
-            {message.user}
-            <time className="text-xs opacity-50">12:45</time>
-          </div>
+          <div className="chat-header">{message.user}</div>
           <div className="chat-bubble">{message.text}</div>
-          <div className="chat-footer opacity-50">Delivered</div>
         </div>
       ))}
     </div>

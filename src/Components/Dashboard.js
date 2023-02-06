@@ -3,6 +3,9 @@ import ChatBubbles from "./ChatBubbles";
 import Prompt from "./Prompt";
 
 const Dashboard = () => {
+  const handleClear = () => {
+    localStorage.clear();
+  };
   return (
     <div className="drawer drawer-mobile">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -18,10 +21,10 @@ const Dashboard = () => {
         <ul className="menu p-4 w-80 bg-slate-500 text-white">
           {/* <!-- Sidebar content here --> */}
           <li>
-            <a>Sidebar Item 1</a>
+            <p onClick={handleClear}>Clear chat history</p>
           </li>
           <li>
-            <a>Sidebar Item 2</a>
+            <p>About this project</p>
           </li>
         </ul>
       </div>
