@@ -1,14 +1,18 @@
 import React from "react";
-import useSubmit from "../Hooks/useSubmit";
 
 const ChatBubbles = () => {
-  const { chatLog } = useSubmit();
+  // const { isLoad } = useSubmit();
+  const chatLog = JSON.parse(localStorage.getItem("chatLog"));
+  // const [chatLog, setChatLog] = useState([]);
+  // useEffect(() => {
+  //   setChatLog(chatLogs);
+  // }, []);
   return (
     <div>
       {chatLog.map((message) => (
         <div
           className={`chat ${
-            message.user === "me" ? "chat-start" : "chat-end"
+            message.user === "Me" ? "chat-end" : "chat-start"
           }`}
         >
           <div className="chat-image avatar">
@@ -20,7 +24,7 @@ const ChatBubbles = () => {
             {message.user}
             <time className="text-xs opacity-50">12:45</time>
           </div>
-          <div className="chat-bubble">{message.message}</div>
+          <div className="chat-bubble">{message.text}</div>
           <div className="chat-footer opacity-50">Delivered</div>
         </div>
       ))}

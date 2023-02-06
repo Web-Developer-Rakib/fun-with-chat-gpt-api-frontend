@@ -1,18 +1,37 @@
-import { useState } from "react";
-
 const useSubmit = () => {
-  const [input, setInput] = useState("");
-  const [chatLog, setChatLog] = useState([
-    { user: "gpt", message: "How can I help you?" },
-    { user: "me", message: "I want to use Chat GPT." },
-  ]);
+  const oldChatLog = JSON.parse(localStorage.getItem("chatLog"));
+  let chatLog = [];
+  if (oldChatLog === null) {
+    localStorage.setItem("chatLog", JSON.stringify([]));
+  } else {
+    chatLog = [...oldChatLog];
+  }
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Sent");
-    setChatLog([...chatLog, { user: "me", message: input }]);
-    setInput("");
+    const input = e.target.input.value;
+    chatLog.push({ user: "Me", text: `${input}` });
+    localStorage.setItem("chatLog", JSON.stringify(chatLog));
+
+    fetch("http://localhost:5000/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        prompt: `${input}`,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        chatLog.push({ user: "Rakib", text: data.bot });
+        localStorage.setItem("chatLog", JSON.stringify(chatLog));
+        window.location.reload(true);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
   };
-  return { handleSubmit, chatLog, setInput };
+  return { handleSubmit };
 };
 
 export default useSubmit;
