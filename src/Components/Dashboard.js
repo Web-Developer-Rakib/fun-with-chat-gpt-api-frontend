@@ -4,9 +4,11 @@ import Prompt from "./Prompt";
 
 const Dashboard = () => {
   const [chatLog, setChatLog] = useState([]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const input = e.target.input.value;
+
     const oldChatLog = [...chatLog, { user: "Me", text: `${input}` }];
     setChatLog(oldChatLog);
     e.target.reset();
@@ -35,14 +37,21 @@ const Dashboard = () => {
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col mx-5">
         {/* <!-- Page content here --> */}
-        <div className="overflow-y-scroll h-[80%]">
-          {chatLog.length === 0 ? (
-            <h1 className="text-xl text-center">Start conversation</h1>
-          ) : (
-            chatLog.map((message, index) => (
-              <ChatBubbles message={message} key={index}></ChatBubbles>
-            ))
-          )}
+        <div className="overflow-y-auto flex flex-col-reverse h-[80%]">
+          <div>
+            {chatLog.length === 0 ? (
+              <div className="flex justify-center flex-col h-[500px]">
+                <h1 className="text-xl text-center">Start conversation</h1>
+                <h3 className="text-center">
+                  Do not overlap message. I need to think about your question.
+                </h3>
+              </div>
+            ) : (
+              chatLog.map((message, index) => (
+                <ChatBubbles message={message} key={index}></ChatBubbles>
+              ))
+            )}
+          </div>
         </div>
         <Prompt handleSubmit={handleSubmit}></Prompt>
       </div>
