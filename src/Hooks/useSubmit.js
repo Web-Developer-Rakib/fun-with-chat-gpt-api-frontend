@@ -6,13 +6,11 @@ const useSubmit = () => {
   } else {
     chatLog = [...oldChatLog];
   }
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const input = e.target.input.value;
     chatLog.push({ user: "Me", text: `${input}` });
     localStorage.setItem("chatLog", JSON.stringify(chatLog));
-
     fetch("http://localhost:5000/", {
       method: "POST",
       headers: {
