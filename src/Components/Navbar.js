@@ -6,10 +6,12 @@ const Navbar = () => {
     <div>
       <div className="navbar bg-slate-600 text-white">
         <div className="flex-1">
-          <a className="btn btn-ghost normal-case text-xl">Chat with Rakib</a>
+          <h1 className="btn btn-ghost normal-case text-xl">
+            ChatBot Rakib 2.0
+          </h1>
         </div>
         <div className="avatar">
-          <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 lg:mr-5">
+          <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 mr-5">
             <img src={Me} alt="me" />
           </div>
         </div>
