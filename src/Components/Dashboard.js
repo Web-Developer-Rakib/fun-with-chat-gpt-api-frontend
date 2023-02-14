@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { FaRegTrashAlt, FaUserCircle } from "react-icons/fa";
+import { toast } from "react-toastify";
 import AboutModal from "./AboutModal";
 import ChatBubbles from "./ChatBubbles";
 import ClearModal from "./ClearModal";
@@ -11,35 +13,40 @@ const Dashboard = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const input = e.target.input.value;
-    const oldChatLog = [...chatLog, { user: "Me", text: `${input}` }];
-    setChatLog(oldChatLog);
-    e.target.reset();
-    setTyping(
-      <div className="mb-5">
-        <p>Typing...</p>
-        <progress className="progress w-20"></progress>
-      </div>
-    );
-    fetch("http://localhost:5000/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        prompt: `${input}`,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setChatLog([...oldChatLog, { user: "Rakib", text: data.bot }]);
-        setTyping("");
+    if (input === "") {
+      toast.warn("Please type something.");
+    } else {
+      const oldChatLog = [...chatLog, { user: "Me", text: `${input}` }];
+      setChatLog(oldChatLog);
+      e.target.reset();
+      setTyping(
+        <div className="mb-5">
+          <p>Typing...</p>
+          <progress className="progress w-20"></progress>
+        </div>
+      );
+      fetch("http://localhost:5000/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: `${input}`,
+        }),
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          setChatLog([...oldChatLog, { user: "Rakib", text: data.bot }]);
+          setTyping("");
+        })
+        .catch((error) => {
+          toast.error("Error:", error);
+        });
+    }
   };
   const handleClear = () => {
     setChatLog([]);
+    toast.success("Chat history clear successfully.");
   };
   return (
     <>
@@ -73,10 +80,14 @@ const Dashboard = () => {
           <ul className="menu p-4 w-80 bg-slate-500 text-white">
             {/* <!-- Sidebar content here --> */}
             <li>
-              <label htmlFor="clear-modal">Clear chat history</label>
+              <label htmlFor="clear-modal">
+                Clear chat history <FaRegTrashAlt></FaRegTrashAlt>
+              </label>
             </li>
             <li>
-              <label htmlFor="about-modal">About me</label>
+              <label htmlFor="about-modal">
+                About me <FaUserCircle></FaUserCircle>
+              </label>
             </li>
           </ul>
         </div>

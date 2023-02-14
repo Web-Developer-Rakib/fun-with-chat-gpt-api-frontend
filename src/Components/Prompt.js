@@ -1,4 +1,5 @@
 import React from "react";
+import { FaRegArrowAltCircleRight } from "react-icons/fa";
 
 const Prompt = ({ handleSubmit }) => {
   // const { handleSubmit } = useSubmit();
@@ -13,7 +14,9 @@ const Prompt = ({ handleSubmit }) => {
         placeholder="Type here"
         class="input input-bordered w-full"
       />
-      <button className="btn btn-primary ml-5">Send</button>
+      <button className="btn btn-success ml-5">
+        <FaRegArrowAltCircleRight></FaRegArrowAltCircleRight>
+      </button>
     </form>
   );
 };

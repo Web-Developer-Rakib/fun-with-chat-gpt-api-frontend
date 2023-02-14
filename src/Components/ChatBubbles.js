@@ -18,6 +18,9 @@ const ChatBubbles = ({ message }) => {
         </div>
         <div className="chat-header">{message.user}</div>
         <div className="chat-bubble">{message.text}</div>
+        {message.user === "Me" && (
+          <div className="chat-footer opacity-50">Seen</div>
+        )}
       </div>
     </div>
   );
