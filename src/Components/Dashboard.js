@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import AboutModal from "./AboutModal";
 import ChatBubbles from "./ChatBubbles";
 import ClearModal from "./ClearModal";
 import Prompt from "./Prompt";
 
 const Dashboard = () => {
   const [chatLog, setChatLog] = useState([]);
+  const [typing, setTyping] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,6 +14,12 @@ const Dashboard = () => {
     const oldChatLog = [...chatLog, { user: "Me", text: `${input}` }];
     setChatLog(oldChatLog);
     e.target.reset();
+    setTyping(
+      <div className="mb-5">
+        <p>Typing...</p>
+        <progress className="progress w-20"></progress>
+      </div>
+    );
     fetch("http://localhost:5000/", {
       method: "POST",
       headers: {
@@ -24,6 +32,7 @@ const Dashboard = () => {
       .then((response) => response.json())
       .then((data) => {
         setChatLog([...oldChatLog, { user: "Rakib", text: data.bot }]);
+        setTyping("");
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -52,8 +61,10 @@ const Dashboard = () => {
                   <ChatBubbles message={message} key={index}></ChatBubbles>
                 ))
               )}
+              {typing}
             </div>
           </div>
+
           <Prompt handleSubmit={handleSubmit}></Prompt>
         </div>
         <div className="drawer-side">
@@ -62,17 +73,16 @@ const Dashboard = () => {
           <ul className="menu p-4 w-80 bg-slate-500 text-white">
             {/* <!-- Sidebar content here --> */}
             <li>
-              <label htmlFor="clear-modal" className="btn">
-                Clear chat history
-              </label>
+              <label htmlFor="clear-modal">Clear chat history</label>
             </li>
             <li>
-              <p>About this project</p>
+              <label htmlFor="about-modal">About me</label>
             </li>
           </ul>
         </div>
       </div>
       <ClearModal handleClear={handleClear}></ClearModal>
+      <AboutModal></AboutModal>
     </>
   );
 };

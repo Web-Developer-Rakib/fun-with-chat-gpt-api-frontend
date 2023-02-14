@@ -1,4 +1,5 @@
 import React from "react";
+import Me from "../img/user.png";
 
 const Navbar = () => {
   return (
@@ -6,6 +7,11 @@ const Navbar = () => {
       <div className="navbar bg-slate-600 text-white">
         <div className="flex-1">
           <a className="btn btn-ghost normal-case text-xl">Chat with Rakib</a>
+        </div>
+        <div className="avatar">
+          <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 lg:mr-5">
+            <img src={Me} alt="me" />
+          </div>
         </div>
         <div className="flex-none lg:hidden">
           <label className="btn btn-square btn-ghost" htmlFor="my-drawer-2">
