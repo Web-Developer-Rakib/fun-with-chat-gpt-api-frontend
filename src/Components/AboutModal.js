@@ -1,4 +1,6 @@
 import React from "react";
+import { FaGithubSquare, FaGlobe, FaLinkedin } from "react-icons/fa";
+import Avatar from "../img/rakib.jpeg";
 
 const AboutModal = () => {
   return (
@@ -12,13 +14,43 @@ const AboutModal = () => {
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold">
-            Congratulations random Internet user!
-          </h3>
+          <div className="avatar">
+            <div className="w-24 mask mask-squircle">
+              <img src={Avatar} alt="Rakibul Hasan" />
+            </div>
+          </div>
+          <h3 className="text-lg font-bold">About me</h3>
           <p className="py-4">
-            You've been selected for a chance to get one year of subscription to
-            use Wikipedia for free!
+            This project is powered by Chat GPT (text davinci 003) API. It's
+            just a fun project, developed by Rakibul Hasan. If you want to know
+            more about developer Rakibul Hasan, Feel free to check the links
+            below.
           </p>
+          <div class="divider">||</div>
+          <div className="flex justify-center gap-5">
+            <a
+              href="https://github.com/Web-Developer-Rakib"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaGithubSquare></FaGithubSquare>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/rakibul-hasan-65425a1b9/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <FaLinkedin></FaLinkedin>
+            </a>
+            <a
+              href="https://webdeveloperrakib.com/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              {" "}
+              <FaGlobe></FaGlobe>
+            </a>
+          </div>
         </div>
       </div>
     </div>
