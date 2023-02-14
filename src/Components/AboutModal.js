@@ -14,7 +14,7 @@ const AboutModal = () => {
           >
             ✕
           </label>
-          <div className="avatar">
+          <div className="avatar online">
             <div className="w-24 mask mask-squircle">
               <img src={Avatar} alt="Rakibul Hasan" />
             </div>

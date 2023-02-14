@@ -17,7 +17,11 @@ const ChatBubbles = ({ message }) => {
           </div>
         </div>
         <div className="chat-header">{message.user}</div>
-        <div className="chat-bubble">{message.text}</div>
+        <div className="chat-bubble">
+          {message.text === undefined
+            ? "Sorry! There is a server issue. Please try again."
+            : message.text}
+        </div>
         {message.user === "Me" && (
           <div className="chat-footer opacity-50">Seen</div>
         )}

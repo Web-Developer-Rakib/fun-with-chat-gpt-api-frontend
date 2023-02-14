@@ -25,7 +25,7 @@ const Dashboard = () => {
           <progress className="progress w-20"></progress>
         </div>
       );
-      fetch("http://localhost:5000/", {
+      fetch(`${process.env.REACT_APP_SERVER_URL}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -38,15 +38,21 @@ const Dashboard = () => {
         .then((data) => {
           setChatLog([...oldChatLog, { user: "Rakib", text: data.bot }]);
           setTyping("");
+          console.log(chatLog);
         })
-        .catch((error) => {
-          toast.error("Error:", error);
+        .catch(() => {
+          toast.error("Something went wrong.");
+          setTyping("");
         });
     }
   };
   const handleClear = () => {
-    setChatLog([]);
-    toast.success("Chat history clear successfully.");
+    if (chatLog.length === 0) {
+      toast.warn("Chat history is cleared already.");
+    } else {
+      setChatLog([]);
+      toast.success("Chat history clear successfully.");
+    }
   };
   return (
     <>
@@ -58,9 +64,9 @@ const Dashboard = () => {
             <div>
               {chatLog.length === 0 ? (
                 <div className="flex justify-center flex-col h-[500px]">
-                  <h1 className="text-xl text-center">Start conversation</h1>
+                  <h1 className="text-xl text-center">Start conversation.</h1>
                   <h3 className="text-center">
-                    Do not overlap message. I need to think about your question.
+                    Ask me anything. I will try to give you appropriate answer.
                   </h3>
                 </div>
               ) : (
