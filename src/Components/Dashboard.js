@@ -38,7 +38,7 @@ const Dashboard = () => {
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col mx-5">
           {/* <!-- Page content here --> */}
-          <div className="overflow-y-auto flex flex-col-reverse h-[80%]">
+          <div className="overflow-y-auto flex flex-col-reverse h-[80%] scrollbar-hide">
             <div>
               {chatLog.length === 0 ? (
                 <div className="flex justify-center flex-col h-[500px]">
