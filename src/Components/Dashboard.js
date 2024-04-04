@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaRegTrashAlt, FaUserCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import AboutModal from "./AboutModal";
@@ -9,6 +9,15 @@ import Prompt from "./Prompt";
 const Dashboard = () => {
   const [chatLog, setChatLog] = useState([]);
   const [typing, setTyping] = useState("");
+  const chatEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    chatEndRef.current.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatLog]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,20 +34,26 @@ const Dashboard = () => {
           <progress className="progress w-20"></progress>
         </div>
       );
-      fetch(`${process.env.REACT_APP_SERVER_URL}`, {
+      fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
-          prompt: `${input}`,
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: input }],
+          temperature: 0.7,
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          setChatLog([...oldChatLog, { user: "Rakib", text: data.bot }]);
+          setChatLog([
+            ...oldChatLog,
+            { user: "Rakib", text: data.choices[0].message.content },
+          ]);
+          console.log(data.choices[0].message.content);
           setTyping("");
-          console.log(chatLog);
         })
         .catch(() => {
           toast.error("Something went wrong.");
@@ -56,11 +71,11 @@ const Dashboard = () => {
   };
   return (
     <>
-      <div className="drawer drawer-mobile">
+      <div className="drawer drawer-mobile h-[90vh]">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col mx-5">
           {/* <!-- Page content here --> */}
-          <div className="overflow-y-auto flex flex-col-reverse h-[80%] scrollbar-hide">
+          <div className="overflow-y-auto flex flex-col-reverse scrollbar-hide h-[100vh]">
             <div>
               {chatLog.length === 0 ? (
                 <div className="flex justify-center flex-col h-[500px]">
@@ -75,14 +90,13 @@ const Dashboard = () => {
                 ))
               )}
               {typing}
+              <div className="mt-3" ref={chatEndRef}></div>
             </div>
           </div>
-
           <Prompt handleSubmit={handleSubmit}></Prompt>
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-
           <ul className="menu p-4 w-80 bg-slate-500 text-white">
             {/* <!-- Sidebar content here --> */}
             <li>

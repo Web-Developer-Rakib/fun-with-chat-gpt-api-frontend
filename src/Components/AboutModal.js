@@ -21,10 +21,9 @@ const AboutModal = () => {
           </div>
           <h3 className="text-lg font-bold">About me</h3>
           <p className="py-4">
-            This project is powered by Chat GPT (text davinci 003) API. It's
-            just a fun project, developed by Rakibul Hasan. If you want to know
-            more about developer Rakibul Hasan, Feel free to check the links
-            below.
+            This project is powered by Chat GPT (gpt-3.5-turbo) API. It's just a
+            fun project, developed by Rakibul Hasan. If you want to know more
+            about developer Rakibul Hasan, Feel free to check the links below.
           </p>
           <div class="divider">||</div>
           <div className="flex justify-center gap-5">
