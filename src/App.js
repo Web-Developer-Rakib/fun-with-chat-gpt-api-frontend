@@ -7,9 +7,9 @@ import Navbar from "./Components/Navbar";
 function App() {
   return (
     <div className="">
-      <Navbar></Navbar>
-      <Dashboard></Dashboard>
-      <ToastContainer></ToastContainer>
+      <Navbar />
+      <Dashboard />
+      <ToastContainer />
     </div>
   );
 }

@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaRegTrashAlt, FaUserCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
+import "../App.css";
 import AboutModal from "./AboutModal";
 import ChatBubbles from "./ChatBubbles";
 import ClearModal from "./ClearModal";
 import Prompt from "./Prompt";
-
+import TypingIndicator from "./TypingIndicator/TypingIndicator";
 const Dashboard = () => {
   const [chatLog, setChatLog] = useState([]);
   const [typing, setTyping] = useState("");
@@ -28,12 +29,7 @@ const Dashboard = () => {
       const oldChatLog = [...chatLog, { user: "Me", text: `${input}` }];
       setChatLog(oldChatLog);
       e.target.reset();
-      setTyping(
-        <div className="mb-5">
-          <p>Typing...</p>
-          <progress className="progress w-20"></progress>
-        </div>
-      );
+      setTyping(<TypingIndicator />);
       fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
         headers: {
@@ -86,14 +82,14 @@ const Dashboard = () => {
                 </div>
               ) : (
                 chatLog.map((message, index) => (
-                  <ChatBubbles message={message} key={index}></ChatBubbles>
+                  <ChatBubbles message={message} key={index} />
                 ))
               )}
               {typing}
               <div className="mt-3" ref={chatEndRef}></div>
             </div>
           </div>
-          <Prompt handleSubmit={handleSubmit}></Prompt>
+          <Prompt handleSubmit={handleSubmit} />
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
@@ -101,19 +97,19 @@ const Dashboard = () => {
             {/* <!-- Sidebar content here --> */}
             <li>
               <label htmlFor="clear-modal">
-                Clear chat history <FaRegTrashAlt></FaRegTrashAlt>
+                Clear chat history <FaRegTrashAlt />
               </label>
             </li>
             <li>
               <label htmlFor="about-modal">
-                About me <FaUserCircle></FaUserCircle>
+                About me <FaUserCircle />
               </label>
             </li>
           </ul>
         </div>
       </div>
-      <ClearModal handleClear={handleClear}></ClearModal>
-      <AboutModal></AboutModal>
+      <ClearModal handleClear={handleClear} />
+      <AboutModal />
     </>
   );
 };
