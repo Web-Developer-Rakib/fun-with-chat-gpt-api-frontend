@@ -12,7 +12,7 @@ const Navbar = () => {
               <img src={Rakib} alt="Rakib" />
             </div>
           </div>
-          <h1 className="btn btn-ghost normal-case text-xl">
+          <h1 className="btn btn-ghost normal-case text-sm lg:text-lg">
             ChatBot Rakib 3.0
           </h1>
         </div>
